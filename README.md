@@ -7,6 +7,7 @@ Monkeytype is a minimalistic and customizable typing test platform. It offers nu
 - python3 MonkeyBot.py
 
 # Error Handling
+- Avoid using mouse inputs into your browser. Enter works best on alert.
 - Running MonkeyBot.py should open a browser with instructions on how to
 - Please don't exit the browser while the program is typing.
 - Chances are it will continue typing even after. There is no failsafe.
