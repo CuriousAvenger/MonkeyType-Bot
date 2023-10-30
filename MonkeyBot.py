@@ -16,6 +16,7 @@ def thread(fn):
     return wrapper
 
 class MonkeyBot:
+    # constants
     TIMELIMIT = 6000     # 1 hour timeout
     TIMEINTERVAL = 0.05  # wait 0.05 between words
     TIMEINT_ERR = 0.02   # 0.05 +- 0.02
@@ -67,7 +68,6 @@ class MonkeyBot:
             WebDriverWait(self.driver, self.TIMELIMIT).until(EC.alert_is_present())
             time.sleep(1.5)
 
-            # Looking up words and typing
             start, words = time.time(), ''
             if human_typing:
                 while time.time() - start < self.TIMECONTROL:
@@ -79,8 +79,7 @@ class MonkeyBot:
                     for i in words.split('\n'):
                         pg.write(i + " ")
             self.driver.execute_script('alert("Bot Finished Typing. Click ~ To Reactivate")')
-    
-    # randomize typing speed
+
     def randomize_typing_speed(self, words, intervals, error_rate, typos_rate):
         def add_noise():
             if random.random() > 0.5:
