@@ -81,7 +81,7 @@ class MonkeyBot:
             self.driver.execute_script('alert("Bot Finished Typing. Click ~ To Reactivate")')
     
     # randomize typing speed
-    def randomize_typing_speed(words, intervals, error_rate, typos_rate):
+    def randomize_typing_speed(self, words, intervals, error_rate, typos_rate):
         def add_noise():
             if random.random() > 0.5:
                 return intervals+(random.random() * error_rate)
@@ -103,4 +103,4 @@ class MonkeyBot:
 if __name__ == '__main__':
     bot = MonkeyBot()
     bot.open_website(accept_cookies=True, cookie='//*[@id="cookiePopup"]/div[2]/div[2]/button[1]')
-    bot.activate_bot(human_typing=False, enable_fail_safe=True)
+    bot.activate_bot(human_typing=True, enable_fail_safe=True)
