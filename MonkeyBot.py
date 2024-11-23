@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time, random, pyautogui as pg
 from threading import Thread
 from pynput.keyboard import Key, Listener
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 def thread(fn):
     def wrapper(*args, **kwargs):
@@ -20,14 +22,17 @@ class MonkeyBot:
     TIMELIMIT = 6000     # 1 hour timeout
     TIMEINTERVAL = 0.05  # wait 0.05 between words
     TIMEINT_ERR = 0.02   # 0.05 +- 0.02
-    TYPOS_RATE = 0.20    # 15% percent error
+    TYPOS_RATE = 0.05    # 15% percent error
     TIMECONTROL = 30     # Gamemode in monkeytype
 
     def __init__(self):
         # initalize driver
-        self.driver = webdriver.Chrome(options=Options(), service=Service(executable_path='chromedriver.exe'))
+        chrome_options = Options()
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument("--start-maximized")
+        self.driver = webdriver.Chrome(options=chrome_options, service=Service(ChromeDriverManager().install()))
         
-    def open_website(self, accept_cookies=False, cookie=''):
+    def open_website(self, accept_cookies=True, cookie=''):
         self.driver.get('''https://monkeytype.com/''')
         if accept_cookies: # accept website cookies
             assert cookie != '', 'Cookie xpath not provided'
@@ -101,5 +106,5 @@ class MonkeyBot:
 
 if __name__ == '__main__':
     bot = MonkeyBot()
-    bot.open_website(accept_cookies=True, cookie='//*[@id="cookiePopup"]/div[2]/div[2]/button[1]')
+    bot.open_website(accept_cookies=True, cookie='//*[@id="cookiesModal"]/div[2]/div[2]/div[2]/button[1]')
     bot.activate_bot(human_typing=True, enable_fail_safe=True)
